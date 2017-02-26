@@ -5,7 +5,7 @@ function activation(x) {
 }
 
 function multiply(a, b) {
-    // debugger;
+    
     var aNumRows = a.length, aNumCols = a[0].length,
         bNumRows = b.length, bNumCols = b[0].length,
         m = new Array(aNumRows);  // initialize array of rows
