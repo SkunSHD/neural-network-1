@@ -1,11 +1,11 @@
 'use strict';
 
 function activation(x) {
-    return x >= 0.5 ? 1 : 0;
+    return x[0][0] >= 0.5 ? 1 : 0;
 }
 
 function multiply(a, b) {
-    console.log('<<< <<< <<< a, b', a, b);
+    // debugger;
     var aNumRows = a.length, aNumCols = a[0].length,
         bNumRows = b.length, bNumCols = b[0].length,
         m = new Array(aNumRows);  // initialize array of rows
@@ -31,23 +31,29 @@ function predict(vodka, rain, friend) {
     var weights_input_to_hidden_1 = [ [0.25] , [0.25], [0] ];
     var weights_input_to_hidden_2 = [ [0.5] , [-0.4], [0.9] ];
 
-    // var weights_input_to_hidden = [weights_input_to_hidden_1, weights_input_to_hidden_2];
-
-    var hidden_input_1 = multiply(weights_input_to_hidden_1, input);
-    var hidden_input_2 = multiply(weights_input_to_hidden_2, input);
-    console.log('hidden_input_1: ', hidden_input_1);
-    console.log('hidden_input_2: ', hidden_input_2);
+    var hidden_input_1 = multiply(input, weights_input_to_hidden_1);
+    var hidden_input_2 = multiply(input, weights_input_to_hidden_2);
+    console.log('>>> hidden_input_1: ', hidden_input_1);
+    console.log('>>> hidden_input_2: ', hidden_input_2);
 
     var hidden_output_1 = activation(hidden_input_1);
     var hidden_output_2 = activation(hidden_input_2);
-    console.log('<<< hidden_outputs', [hidden_output_1, hidden_output_2]);
+    console.log('hidden_outputs >>> ', hidden_output_1, hidden_output_2);
 
-    var weights_hidden_to_output = [ [-1], [1] ];
-    var outputResults = multiply([[hidden_input_1], [hidden_output_2]], weights_hidden_to_output);
-    var output = activation(outputResults);
-    console.log('<<< <<< <<< output', output);
+    var weights_hidden_to_outputs = [ [-1], [1] ];
+    var output_input = multiply([[hidden_output_1, hidden_output_2]], weights_hidden_to_outputs);
+    console.log('>>> output_input', output_input);
+
+    var output_result = activation(output_input);
+    console.log('output >>>', output_result);
+
+
+
+    console.log(
+        output_result > 0 ? 'GO ON PARTY!' : 'don\'t go'
+    );
 }
 
-var vodka = 0, rain = 1, friend = 0;
+var vodka = 0, rain = 1, friend = 1;
 
 predict(vodka, rain, friend);
